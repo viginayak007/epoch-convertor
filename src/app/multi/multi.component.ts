@@ -45,21 +45,28 @@ export class MultiComponent implements OnInit {
 
   convertObj(obj: any) {
     obj['videoActualStartTime'] =
-      obj['videoActualStartTime'] && obj['videoActualStartTime'] <= 0
+      !obj['videoActualStartTime'] || obj['videoActualStartTime'] <= 0
         ? 0
         : this.convertService.convertEpochTimeToDateTime(
             obj['videoActualStartTime']
           );
 
+    obj['videoMOPStartTime'] =
+      !obj['videoMOPStartTime'] || obj['videoMOPStartTime'] <= 0
+        ? 0
+        : this.convertService.convertEpochTimeToDateTime(
+            obj['videoMOPStartTime']
+          );
+
     obj['videoActualEndTime'] =
-      obj['videoActualEndTime'] && obj['videoActualEndTime'] <= 0
+      !obj['videoActualEndTime'] || obj['videoActualEndTime'] <= 0
         ? 0
         : this.convertService.convertEpochTimeToDateTime(
             obj['videoActualEndTime']
           );
 
     obj['gapCalculatedStartTime'] =
-      obj['gapCalculatedStartTime'] && obj['gapCalculatedStartTime'] <= 0
+      !obj['gapCalculatedStartTime'] || obj['gapCalculatedStartTime'] <= 0
         ? 0
         : this.convertService.convertEpochTimeToDateTime(
             obj['gapCalculatedStartTime']
