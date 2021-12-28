@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import moment from 'moment-timezone';
 @Component({
   selector: 'app-multi',
   templateUrl: './multi.component.html',
