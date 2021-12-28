@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import moment from 'moment-timezone';
+
+import { ConvertService } from '../convert.service';
 @Component({
   selector: 'app-multi',
   templateUrl: './multi.component.html',
@@ -15,13 +16,7 @@ export class MultiComponent implements OnInit {
     isError: false,
     msg: '',
   };
-  constructor() {
-    var d = new Date(1458619200000);
-    var myTimezone = 'America/Toronto';
-    var myDatetimeFormat = 'YYYY-MM-DD hh:mm:ss a z';
-    var myDatetimeString = moment(d).tz(myTimezone).format(myDatetimeFormat);
-    console.log(myDatetimeString);
-  }
+  constructor(private convertService: ConvertService) {}
 
   ngOnInit() {}
 
@@ -32,16 +27,44 @@ export class MultiComponent implements OnInit {
     try {
       let data = JSON.parse(this.data);
       if (Array.isArray(data)) {
-        this.result = 'Array';
+        let arryData = data.map((m) => {
+          return this.convertObj(m);
+        });
+        this.result = JSON.stringify(arryData, null, 2);
       } else if (typeof data === 'object') {
-        this.result = 'obj';
+        let objData = this.convertObj(data);
+        this.result = JSON.stringify(objData, null, 2);
       }
-      this.result = 'obj';
     } catch (e) {
       this.error = {
         isError: true,
         msg: e,
       };
     }
+  }
+
+  convertObj(obj: any) {
+    obj['videoActualStartTime'] =
+      obj['videoActualStartTime'] && obj['videoActualStartTime'] <= 0
+        ? 0
+        : this.convertService.convertEpochTimeToDateTime(
+            obj['videoActualStartTime']
+          );
+
+    obj['videoActualEndTime'] =
+      obj['videoActualEndTime'] && obj['videoActualEndTime'] <= 0
+        ? 0
+        : this.convertService.convertEpochTimeToDateTime(
+            obj['videoActualEndTime']
+          );
+
+    obj['gapCalculatedStartTime'] =
+      obj['gapCalculatedStartTime'] && obj['gapCalculatedStartTime'] <= 0
+        ? 0
+        : this.convertService.convertEpochTimeToDateTime(
+            obj['gapCalculatedStartTime']
+          );
+
+    return obj;
   }
 }

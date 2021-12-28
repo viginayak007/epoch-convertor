@@ -3,22 +3,23 @@
     <label for="exampleFormControlTextarea1">PASTE JSON HERE</label>
     <textarea
       name="data"
-      class="form-control"
+      class="form-control form-control-sm"
       id="exampleFormControlTextarea1"
       [(ngModel)]="data"
       (ngModelChange)="changeData()"
-      rows="5"
+      rows="8"
     ></textarea>
     <small class="text-danger" *ngIf="error.isError">{{ error.msg }}</small>
   </div>
-  <div class="form-group">
+  <div class="form-group form-group-sm">
     <label for="exampleFormControlTextarea1">Result</label>
     <textarea
       name="result"
-      class="form-control"
+      class="form-control form-control-sm"
       id="exampleFormControlTextarea1"
       [(ngModel)]="result"
-      rows="5"
+      rows="15"
+      disabled
     ></textarea>
   </div>
 </form>
