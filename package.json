@@ -11,6 +11,7 @@
     "@angular/platform-browser": "^12.2.5",
     "@angular/platform-browser-dynamic": "^12.2.5",
     "@angular/router": "^12.2.5",
+    "@types/moment": "^2.13.0",
     "moment": "^2.29.1",
     "rxjs": "^7.3.0",
     "tslib": "^2.3.1",
