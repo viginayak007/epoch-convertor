@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import moment from 'moment-timezone';
 @Component({
   selector: 'app-convertor',
   templateUrl: './convertor.component.html',
@@ -7,13 +7,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConvertorComponent implements OnInit {
   dt: string = '';
-  eDt: number;
+  eDt: string;
+  test: any;
+  error: {
+    isError: boolean;
+    msg?: string;
+  } = {
+    isError: false,
+    msg: '',
+  };
   constructor() {}
 
   ngOnInit() {}
 
-  dtChnage() {
-    console.log(this.dt);
+  dtChange() {
+    try {
+      let validDate = moment(new Date(this.dt)).isValid();
+      if (validDate) {
+        let dt = new Date(this.dt);
+        console.log(dt);
+        this.test = moment(dt).valueOf();
+      } else {
+        throw 'invalid Date time';
+      }
+    } catch (e) {
+      this.error = {
+        isError: true,
+        msg: e,
+      };
+    }
   }
-  eDtChnage() {}
+  eDtChange() {}
 }
