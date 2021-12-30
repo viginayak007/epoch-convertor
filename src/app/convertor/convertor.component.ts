@@ -26,7 +26,7 @@ export class ConvertorComponent implements OnInit {
       if (validDate) {
         let dt = new Date(this.dt);
         console.log(dt);
-        this.test = moment(dt).valueOf();
+        this.eDt = moment(dt).valueOf();
       } else {
         throw 'invalid Date time';
       }
@@ -37,5 +37,22 @@ export class ConvertorComponent implements OnInit {
       };
     }
   }
-  eDtChange() {}
+  eDtChange() {
+    try {
+      let validDate = moment(new Date(this.eDt)).isValid();
+      if (validDate) {
+        let dt = new Date(this.eDt);
+        console.log(dt);
+        this. = moment(dt).valueOf();
+      } else {
+        throw 'invalid Date time';
+      }
+    } catch (e) {
+      this.error = {
+        isError: true,
+        msg: e,
+      };
+    }
+
+  }
 }
