@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import moment from 'moment-timezone';
+import { ConvertService } from '../convert.service';
 @Component({
   selector: 'app-convertor',
   templateUrl: './convertor.component.html',
@@ -8,7 +9,8 @@ import moment from 'moment-timezone';
 export class ConvertorComponent implements OnInit {
   dt: string = '';
   eDt: string;
-  test: any;
+  t: any;
+  et: any;
   error: {
     isError: boolean;
     msg?: string;
@@ -16,7 +18,7 @@ export class ConvertorComponent implements OnInit {
     isError: false,
     msg: '',
   };
-  constructor() {}
+  constructor(private convertService: ConvertService) {}
 
   ngOnInit() {}
 
@@ -26,7 +28,7 @@ export class ConvertorComponent implements OnInit {
       if (validDate) {
         let dt = new Date(this.dt);
         console.log(dt);
-        this.eDt = moment(dt).valueOf();
+        this.t = moment(dt).tz('America/Phoenix').valueOf();
       } else {
         throw 'invalid Date time';
       }
@@ -39,20 +41,19 @@ export class ConvertorComponent implements OnInit {
   }
   eDtChange() {
     try {
-      let validDate = moment(new Date(this.eDt)).isValid();
+      let validDate = new Date(this.eDt);
       if (validDate) {
-        let dt = new Date(this.eDt);
-        console.log(dt);
-        this. = moment(dt).valueOf();
+        let dt = Number(this.eDt);
+        this.et = this.convertService.convertEpochTimeToDateTime(dt);
       } else {
         throw 'invalid Date time';
       }
     } catch (e) {
+      alert(e);
       this.error = {
         isError: true,
         msg: e,
       };
     }
-
   }
 }
