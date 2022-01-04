@@ -28,7 +28,7 @@ export class ConvertorComponent implements OnInit {
       if (validDate) {
         let dt = new Date(this.dt);
         console.log(dt);
-        this.t = moment(dt).tz('America/Phoenix').valueOf();
+        this.t = moment(dt).tz('America/New_York').valueOf();
       } else {
         throw 'invalid Date time';
       }
