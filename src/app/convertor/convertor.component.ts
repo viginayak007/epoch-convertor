@@ -11,6 +11,7 @@ export class ConvertorComponent implements OnInit {
   eDt: string;
   t: any;
   et: any;
+  x: any;
   error: {
     isError: boolean;
     msg?: string;
@@ -27,8 +28,11 @@ export class ConvertorComponent implements OnInit {
       let validDate = moment(new Date(this.dt)).isValid();
       if (validDate) {
         let dt = new Date(this.dt);
-        console.log(dt);
-        this.t = moment(dt).tz('America/New_York').valueOf();
+        let x = moment(dt).format('YYYY-MM-DDTHH:mm:ss');
+        this.x = x;
+        // moment.tz(date.format('YYYY-MM-DDTHH:mm:ss'), 'YYYY-MM-DDTHH:mm:ss', newTimezone);
+        this.t = moment.tz(this.x, 'YYYY-MM-DDTHH:mm:ss', 'America/New_York').valueOf();
+        // this.t = moment(x).utcOffset(0).tz('America/New_York').valueOf();
       } else {
         throw 'invalid Date time';
       }
