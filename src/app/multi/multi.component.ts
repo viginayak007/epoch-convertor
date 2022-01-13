@@ -9,6 +9,7 @@ import { ConvertService } from '../convert.service';
 export class MultiComponent implements OnInit {
   data: string = '';
   result: string = '';
+  stEdTime: string = '';
   error: {
     isError: boolean;
     msg?: string;
@@ -33,7 +34,8 @@ export class MultiComponent implements OnInit {
         this.result = JSON.stringify(arryData, null, 2);
       } else if (typeof data === 'object') {
         let objData = this.convertObj(data);
-        this.result = JSON.stringify(objData, null, 2);
+        this.result = JSON.stringify(objData.obj, null, 2);
+        this.stEdTime = JSON.stringify(objData.stEt, null, 2);
       }
     } catch (e) {
       this.error = {
@@ -44,6 +46,7 @@ export class MultiComponent implements OnInit {
   }
 
   convertObj(obj: any) {
+     
     obj['videoActualStartTime'] =
       !obj['videoActualStartTime'] || obj['videoActualStartTime'] <= 0
         ? 0
@@ -71,7 +74,10 @@ export class MultiComponent implements OnInit {
         : this.convertService.convertEpochTimeToDateTime(
             obj['gapCalculatedStartTime']
           );
-
-    return obj;
+    let stEt = {
+      start: obj['videoActualStartTime'],
+      end: obj['videoActualEndTime']
+    };      
+    return {obj, stEt};
   }
 }
